@@ -1,15 +1,17 @@
 // db.ts
 import { Pool } from 'pg';
-import dotenv from 'dotenv';
+import 'dotenv/config';
 
 // Configure the PostgreSQL connection pool
 export const pool = new Pool({
-    host: process.env.DATABASE_HOST,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME,
-    port: Number(process.env.DATABASE_PORT),
+    host: process.env.DB_HOST_SUPERBASE,
+    user: process.env.DB_USER_SUPERBASE,
+    password: process.env.DB_PASSWORD_SUPERBASE,
+    database: process.env.DB_DATABASE_SUPERBASE,
+    port: Number(process.env.DB_PORT_SUPERBASE),
+    
 });
+
 
 // Generic query function to interact with PostgreSQL
 export const query = async (text: string, params?: any[]) => {
@@ -24,6 +26,7 @@ export const query = async (text: string, params?: any[]) => {
         client.release();
     }
 };
+
 
 
 

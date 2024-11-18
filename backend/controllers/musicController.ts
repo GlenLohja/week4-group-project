@@ -3,12 +3,13 @@ import { Request, Response } from 'express';
 import { query } from '../database/db';
 import axios from 'axios';
 import { createClient } from 'redis';
-
+import 'dotenv/config';
 const GENIUS_API_URL = process.env.GENIUS_HOST + '/search';
 const GENIUS_API_TOKEN = process.env.GENIUS_CLIENT_ACCESS_TOKEN;
 const DEFAULT_EXPIRATION = Number(process.env.DEFAULT_EXPIRATION_TIME); // Default expiration time for cached data in seconds
 
 export const getSongsFromGenius = async (req: Request, res: Response): Promise<Response | any> => {
+    console.log(DEFAULT_EXPIRATION)
     const searchQuery = req.query.searchQuery as string;
     console.log('searchQuery', searchQuery);
     const searchQueryEncoded = encodeURIComponent(searchQuery);
