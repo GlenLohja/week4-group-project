@@ -17,6 +17,7 @@ export const getSongsFromGenius = async (req: Request, res: Response): Promise<R
 
     // Create a Redis client
     const redisClient = createClient({
+        url: process.env.REDIS_URL,
         socket: {
             reconnectStrategy: function (retries) {
                 if (retries > 20) {

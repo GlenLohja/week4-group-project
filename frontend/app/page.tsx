@@ -55,7 +55,7 @@ export default function Home() {
 
       if (token) {
   
-        const res = await fetch(`http://localhost:3000/api/playlists`, {
+        const res = await fetch(`https://week4-group-project.onrender.com/api/playlists`, {
           method: 'GET',
           headers: { 'Authorization': `Bearer ${token}` },
         });
@@ -81,7 +81,7 @@ export default function Home() {
           try {
             if (query !== "") {
               
-              const res = await fetch(`http://localhost:3000/api/music?searchQuery=${query}`, {
+              const res = await fetch(`https://week4-group-project.onrender.com/api/music?searchQuery=${query}`, {
                   method: 'GET',
                   headers: { 'Authorization': `Bearer ${token}` },
               });
@@ -116,7 +116,7 @@ export default function Home() {
       try {
         if (query !== "") {
           
-          const res = await fetch('http://localhost:3000/api/playlists', {
+          const res = await fetch('https://week4-group-project.onrender.com/api/playlists', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ export default function Home() {
         const token = localStorage.getItem('token');
 
         // Send POST request
-        const response = await fetch('http://localhost:3000/api/save-song', {
+        const response = await fetch('https://week4-group-project.onrender.com/api/save-song', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -200,7 +200,7 @@ export default function Home() {
     if (token) {
 
         try {
-            const res = await fetch(`http://localhost:3000/api/songs/${songId}`, {
+            const res = await fetch(`https://week4-group-project.onrender.com/api/songs/${songId}`, {
                 method: 'DELETE',
                 headers: {'Authorization': `Bearer ${token}`},
             });

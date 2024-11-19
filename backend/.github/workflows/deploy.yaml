@@ -1,0 +1,50 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16' # Use your preferred Node version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Start the server (if applicable)
+        run: nohup npm start &
+        env:
+          DB_HOST_SUPERBASE: ${{ secrets.DB_HOST_SUPERBASE }}
+          DB_PORT_SUPERBASE: ${{ secrets.DB_PORT_SUPERBASE }}
+          DB_DATABASE_SUPERBASE: ${{ secrets.DB_DATABASE_SUPERBASE }}
+          DB_USER_SUPERBASE: ${{ secrets.DB_USER_SUPERBASE }}
+          DB_PASSWORD_SUPERBASE: ${{ secrets.DB_PASSWORD_SUPERBASE }}
+  
+      - name: Wait for server to be ready
+        run: sleep 10
+          
+      - name: Check server health
+        run: curl https://week4-group-project.onrender.com/
+  
+      - name: Trigger Render Deployment
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          # Define the Render API endpoint and service ID
+          SERVICE_ID=srv-cstl09u8ii6s73fk1icg
+          RENDER_API_URL="https://api.render.com/v1/services/srv-cstl09u8ii6s73fk1icg/deploys"
+          # Trigger the deployment using Render's API
+          curl -X POST \
+            -H "Accept: application/json" \
+            -H "Authorization: Bearer $RENDER_API_KEY" \
+            $RENDER_API_URL
